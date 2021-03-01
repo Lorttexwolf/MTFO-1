@@ -21,18 +21,30 @@ namespace MTFO.Patches
                     Log.Verbose("Found " + name);
                     try
                     {
-                        string filePath = Path.Combine(ConfigManager.GameDataPath, name + ".json");
-                        if (File.Exists(filePath))
+                        if (!CustomDatablockManager.TryGetDatablock(name, out string text))
                         {
-                            Log.Verbose("Reading [" + name + "] from disk...");
-                            __result = File.ReadAllText(filePath);
-                            return;
+                            Log.Verbose($"Could not find custom Datablock: {name}");
+                            File.WriteAllText(Path.Combine(ConfigManager.GameDataPath, name + ".json"), __result);
                         }
-                        else
-                        {
-                            Log.Verbose("No file found at [" + filePath + "], writing file to disk...");
-                            File.WriteAllText(filePath, __result);
-                        }
+
+                        Log.Verbose($"Found custom Datablock: {name}");
+                        __result = text;
+
+                        return;
+
+                        // string filePath = Path.Combine(ConfigManager.GameDataPath, name + ".json");
+
+                        // if (File.Exists(filePath))
+                        // {
+                        //     Log.Verbose("Reading [" + name + "] from disk...");
+                        //     __result = File.ReadAllText(filePath);
+                        //     return;
+                        // }
+                        // else
+                        // {
+                        //     Log.Verbose("No file found at [" + filePath + "], writing file to disk...");
+                        //     File.WriteAllText(filePath, __result);
+                        // }
                     }
                     catch
                     {

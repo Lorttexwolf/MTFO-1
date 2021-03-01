@@ -66,6 +66,9 @@ namespace MTFO.Managers
             //Setup GameData Lookup
             GetGameDataLookup();
 
+            // Setup CustomDatablockManager
+            CustomDatablockManager.Setup();
+
             //Debug
             Log.Debug("---- DEBUG INFO ----");
 
